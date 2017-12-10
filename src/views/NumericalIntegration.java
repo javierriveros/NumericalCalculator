@@ -16,6 +16,8 @@ import methods.integration.Simpson;
 import util.Messages;
 import util.Operations;
 import util.Validations;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class NumericalIntegration extends JPanel {
 	private Principal principal;
@@ -87,6 +89,13 @@ public class NumericalIntegration extends JPanel {
 		
 		JButton btnSolve = new JButton("Calcular");
 		panel.add(btnSolve);
+		
+		JPanel panelBack = new JPanel();
+		bottomPanel.add(panelBack, BorderLayout.SOUTH);
+		
+		JButton button = new JButton("VOLVER AL INICIO");
+		button.addActionListener(e -> this.principal.goToPanel("Principal"));
+		panelBack.add(button);
 		btnSolve.addActionListener(e -> solve());
 	}
 
@@ -126,5 +135,6 @@ public class NumericalIntegration extends JPanel {
 	private void configureWindow() {
 		this.principal.getFrame().setTitle("Integración numérica");
 		this.principal.getFrame().setSize(700, 460);
+    this.principal.getFrame().setLocationRelativeTo(null);
 	}
 }

@@ -86,6 +86,13 @@ public class NumericalDerivation extends JPanel {
 		resultField.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "El resultado es", TitledBorder.LEFT,
 				TitledBorder.TOP, null, Color.BLACK));
 		bottomPanel.add(resultField, BorderLayout.CENTER);
+		
+		JPanel panelBack = new JPanel();
+		bottomPanel.add(panelBack, BorderLayout.SOUTH);
+		
+		JButton backButton = new JButton("VOLVER AL INICIO");
+		backButton.addActionListener(e -> this.principal.goToPanel("Principal"));
+		panelBack.add(backButton);
 		this.principal.getFrame().setTitle("Derivación numérica");
 	}
 	
@@ -108,19 +115,19 @@ public class NumericalDerivation extends JPanel {
 			switch (this.comboBox.getSelectedIndex()) {
 				case 0:
           temp = Double.valueOf(Derivation.derivada(f, x));
-					this.resultField.setText(String.valueOf(Operations.roundD(temp, 3)));
+					this.resultField.setText(String.valueOf(Operations.roundD(temp, 2)));
 					break;
 				case 1:
 					temp = Double.valueOf(Derivation.derivada2(f, x));
-					this.resultField.setText(String.valueOf(Operations.roundD(temp, 3)));
+					this.resultField.setText(String.valueOf(Operations.roundD(temp, 2)));
 					break;
 				case 2:
 					temp = Double.valueOf(Derivation.derivada3(f, x));
-					this.resultField.setText(String.valueOf(Operations.roundD(temp, 3)));
+					this.resultField.setText(String.valueOf(Operations.roundD(temp, 2)));
 					break;
 				case 3:
 					temp = Double.valueOf(Derivation.derivada4(f, x));
-					this.resultField.setText(String.valueOf(Operations.roundD(temp, 3)));
+					this.resultField.setText(String.valueOf(Operations.roundD(temp, 2)));
 					break;
 					
 				default:
@@ -135,5 +142,6 @@ public class NumericalDerivation extends JPanel {
 	private void configureWindow() {
 		this.principal.getFrame().setTitle("Integración numérica");
 		this.principal.getFrame().setSize(500, 400);
+    this.principal.getFrame().setLocationRelativeTo(null);
 	}
 }

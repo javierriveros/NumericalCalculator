@@ -1,30 +1,20 @@
 package views;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import de.javasoft.plaf.synthetica.SyntheticaPlainLookAndFeel;
 import java.awt.BorderLayout;
-
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
-import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import java.awt.Font;
-import java.awt.Color;
-import java.awt.ComponentOrientation;
-
-import de.javasoft.plaf.synthetica.SyntheticaPlainLookAndFeel;
-
-import javax.swing.border.EtchedBorder;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
 public class Principal {
 
 	private JFrame frame;
 	private JPanel mainPanel;
 	private Font mainFont;
-	private EtchedBorder panelsBorder;
 
 	/**
 	 * Launch the application.
@@ -62,7 +52,6 @@ public class Principal {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		mainFont = new Font("Roboto", Font.PLAIN, 25);
-		panelsBorder = new EtchedBorder(EtchedBorder.LOWERED, null, null);
 
 		mainPanel = new JPanel();
 		mainPanel.setBackground(Color.WHITE);
@@ -107,7 +96,7 @@ public class Principal {
 
 	}
 	
-	private void goToPanel(String className) {
+	public void goToPanel(String className) {
 		JPanel panel = null;
 		switch (className) {
 			case "EquationsRoots":
@@ -121,6 +110,11 @@ public class Principal {
 				break;
 			case "NumericalDerivation":
 				panel = new NumericalDerivation(this);
+				break;
+			case "Principal":
+				panel = mainPanel;
+        this.frame.setSize(700, 600);
+        this.frame.setLocationRelativeTo(null);
 				break;
 		}
 		this.frame.setContentPane(panel);
