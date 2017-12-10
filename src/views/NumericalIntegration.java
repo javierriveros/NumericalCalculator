@@ -1,26 +1,21 @@
 package views;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
-
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JLabel;
-import java.awt.Color;
-import java.awt.BorderLayout;
-import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
-import java.awt.Font;
-import javax.swing.JButton;
-import javax.swing.border.TitledBorder;
-
-import methods.integration.Simpson;
-import util.Function;
-import util.Messages;
-import util.Validations;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+import methods.integration.Simpson;
+import util.Messages;
+import util.Operations;
+import util.Validations;
 
 public class NumericalIntegration extends JPanel {
 	private Principal principal;
@@ -109,9 +104,23 @@ public class NumericalIntegration extends JPanel {
 			Messages.errorMessage("Los intervalos de integración deben ser numéricos");
 			return;
 		}
+    
+    if (a.equals(b)) {
+      Messages.errorMessage("Los intervalos no pueden ser iguales");
+			return;
+    }
 		
+		try {
+      new Thread(() -> {
+        Double temporal = Double.valueOf(Simpson.integral(a, b, function, 500));
+        resultField.setText(String.valueOf(Operations.roundD(temporal, 3)));
+      }).start();
+    } catch (Exception ex) {
+      this.resultField.setText("Math ERROR");
+    }
 		
-		this.resultField.setText(Simpson.calcularIntegral(function, a, b));
+//		double temp = Double.valueOf(Simpson.calcularIntegral(function, a, b));
+//		this.resultField.setText(String.valueOf(Operations.roundD(temp, 3)));
 	}
 	
 	private void configureWindow() {
