@@ -17,7 +17,7 @@ import util.Messages;
 import util.Operations;
 import util.Validations;
 
-public class NumericalDerivation extends JPanel {
+public class NumericalDerivationView extends JPanel {
 	private Principal principal;
 	private JTextField resultField;
 	private JTextField functionField;
@@ -27,7 +27,7 @@ public class NumericalDerivation extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public NumericalDerivation(Principal principal) {
+	public NumericalDerivationView(Principal principal) {
 		this.principal = principal;
 		setLayout(new GridLayout(2, 1, 10, 10));
 		configureWindow();

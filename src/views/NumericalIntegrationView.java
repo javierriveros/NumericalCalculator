@@ -19,7 +19,7 @@ import util.Validations;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class NumericalIntegration extends JPanel {
+public class NumericalIntegrationView extends JPanel {
 	private Principal principal;
 	private JTextField bTextField;
 	private JTextField aTextField;
@@ -28,7 +28,7 @@ public class NumericalIntegration extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public NumericalIntegration(Principal principal) {
+	public NumericalIntegrationView(Principal principal) {
 		this.principal = principal;
 		configureWindow();
 		setLayout(new GridLayout(2, 1, 10, 10));
@@ -54,7 +54,7 @@ public class NumericalIntegration extends JPanel {
 		leftPanel.add(panel_2, BorderLayout.CENTER);
 		
 		JLabel lblImg = new JLabel("");
-		lblImg.setIcon(new ImageIcon(NumericalIntegration.class.getResource("/img/integral.png")));
+		lblImg.setIcon(new ImageIcon(NumericalIntegrationView.class.getResource("/img/integral.png")));
 		panel_2.add(lblImg);
 		
 		functionTextField = new JTextField();

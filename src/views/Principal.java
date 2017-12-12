@@ -1,6 +1,13 @@
 package views;
 
 import de.javasoft.plaf.synthetica.SyntheticaPlainLookAndFeel;
+import methods.equationsRoots.FakePosition;
+import views.equationsRoots.BisectionView;
+import views.equationsRoots.FakePositionView;
+import views.equationsRoots.NewtonView;
+import views.equationsRoots.SecantModifiedView;
+import views.equationsRoots.SecantView;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -66,7 +73,7 @@ public class Principal {
 		JButton firstButton = new JButton("Raices de ecuaciones");
 		firstButton.setLayout(new GridLayout(2, 6));
 		firstButton.setIcon(new ImageIcon(Principal.class.getResource("/img/square.png")));
-		firstButton.addActionListener(e -> goToPanel("EquationsRoots"));
+		firstButton.addActionListener(e -> goToPanel("Biseccion"));
 
 		JButton secondButton = new JButton("Ajuste de curvas");
 		secondButton.setHorizontalAlignment(SwingConstants.CENTER);
@@ -99,17 +106,29 @@ public class Principal {
 	public void goToPanel(String className) {
 		JPanel panel = null;
 		switch (className) {
-			case "EquationsRoots":
-				panel = new EquationsRoots(this);
-				break;
 			case "CurvesAdjustment":
-				panel = new CurvesAdjustment(this);
+				panel = new CurvesAdjustmentView(this);
 				break;
 			case "NumericalIntegration":
-				panel = new NumericalIntegration(this);
+				panel = new NumericalIntegrationView(this);
 				break;
 			case "NumericalDerivation":
-				panel = new NumericalDerivation(this);
+				panel = new NumericalDerivationView(this);
+				break;
+			case "Biseccion":
+				panel = new BisectionView(this);
+				break;
+			case "Falsa Posicion":
+				panel = new FakePositionView(this);
+				break;
+			case "Newton Raphson":
+				panel = new NewtonView(this);
+				break;
+			case "Secante":
+				panel = new SecantView(this);
+				break;
+			case "Secante Modificado":
+				panel = new SecantModifiedView(this);
 				break;
 			case "Principal":
 				panel = mainPanel;
