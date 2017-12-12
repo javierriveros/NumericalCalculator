@@ -4,34 +4,35 @@ import org.nfunk.jep.*;
 import util.Function;
 
 public class Simpson {
-	private static Function f = new Function();
-	
-	public static Double simpson13(String function, Double x0, Double xn, Integer n) {
-		Double h = (xn - x0) / n;
 
-		String f0 = f.evaluar(function, "0");
-		String fn = f.evaluar(function, String.valueOf(xn));
+  private static Function f = new Function();
 
-		Double fi = 0d, fj = 0d;
+  public static Double simpson13(String function, Double x0, Double xn, Integer n) {
+    Double h = (xn - x0) / n;
 
-		for (double i = 1; i < (n - 1); i++) {
-			if (i % 2 != 0) {
-				Double xi = x0 + (i * h);
-				fi += Double.parseDouble(f.evaluar(function, String.valueOf(xi)));
-			}
-		}
+    String f0 = f.evaluar(function, "0");
+    String fn = f.evaluar(function, String.valueOf(xn));
 
-		for (double j = 2; j < (n - 1); j++) {
-			if (j % 2 == 0) {
-				Double xj = x0 + (j * h);
-				fj += Double.parseDouble(f.evaluar(function, String.valueOf(xj)));
-			}
-		}
+    Double fi = 0d, fj = 0d;
 
-		Double result = (h / 3) * (Double.parseDouble(f0) + (4 * fi) + (2 * fj) + Double.parseDouble(fn));
+    for (double i = 1; i < (n - 1); i++) {
+      if (i % 2 != 0) {
+        Double xi = x0 + (i * h);
+        fi += Double.parseDouble(f.evaluar(function, String.valueOf(xi)));
+      }
+    }
 
-		return result;
-	}
+    for (double j = 2; j < (n - 1); j++) {
+      if (j % 2 == 0) {
+        Double xj = x0 + (j * h);
+        fj += Double.parseDouble(f.evaluar(function, String.valueOf(xj)));
+      }
+    }
+
+    Double result = (h / 3) * (Double.parseDouble(f0) + (4 * fi) + (2 * fj) + Double.parseDouble(fn));
+
+    return result;
+  }
 
 //	public static Double simpson38(String function, Double x0, Double xn, Integer n) {
 //		Double h = (xn - x0) / n;
@@ -74,25 +75,20 @@ public class Simpson {
 //		}
 //		return (suma * h / 3);
 //	}
+  public static String calcularIntegral(String funcion, String h0, String h2) {
+    String h1 = (Double.parseDouble(h2) / 2) + "".trim();
+    util.Function f = new util.Function();
+    String y0 = f.evaluar(funcion, h0);
+    String y1 = ((Double.parseDouble(f.evaluar(funcion, h1))) * 4) + "".trim();
+    String y2 = f.evaluar(funcion, h2);
+    String area = ((Double.parseDouble(h1) / 3)
+            * (Double.parseDouble(y0)
+            + Double.parseDouble(y1)
+            + Double.parseDouble(y2))) + "".trim();
+    return area;
+  }
 
-	public static String calcularIntegral(String funcion, String h0, String h2) {
-		String h1 = (Double.parseDouble(h2) / 2) + "".trim();
-		util.Function f = new util.Function();
-		String y0 = f.evaluar(funcion, h0);
-		String y1 = ((Double.parseDouble(f.evaluar(funcion, h1))) * 4) + "".trim();
-		String y2 = f.evaluar(funcion, h2);
-		String area = (
-			(Double.parseDouble(h1) / 3)
-			* (
-				Double.parseDouble(y0) + 
-				Double.parseDouble(y1) + 
-				Double.parseDouble(y2)
-			)
-		) + "".trim();
-		return area;
-	}
-	
-	public static String integral(String a1, String b1, String fx, int n) {
+  public static String integral(String a1, String b1, String fx, int n) {
     String mensaje = "Error";
     try {
       JEP objJEP = new JEP();
