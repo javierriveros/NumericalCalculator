@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -19,8 +20,6 @@ import util.Funcion;
 import util.Graph;
 import util.Messages;
 import util.Validations;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class CurvesAdjustmentView extends JPanel {
 
@@ -44,6 +43,7 @@ public class CurvesAdjustmentView extends JPanel {
 
   /**
    * Create the panel.
+   * @param principal
    */
   public CurvesAdjustmentView(Principal principal) {
     this.principal = principal;
@@ -130,6 +130,7 @@ public class CurvesAdjustmentView extends JPanel {
     typeComboBox.setBorder(new TitledBorder(null, "Tipo", TitledBorder.LEADING, TitledBorder.TOP, null, null));
     typeComboBox.setModel(
             new DefaultComboBoxModel(new String[]{"Lineal", "Polinomial", "Logaritmica", "Exponencial", "Potencial"}));
+    typeComboBox.addActionListener(e -> typeComboPerformed());
     bottomActionsTwoPanel.add(typeComboBox);
 
     gradoComboBox = new JComboBox();
@@ -151,7 +152,7 @@ public class CurvesAdjustmentView extends JPanel {
     JPanel resultsPanel = new JPanel();
     rightPanel.add(resultsPanel, BorderLayout.SOUTH);
     resultsPanel.setLayout(new GridLayout(3, 1, 0, 0));
-    
+
     JButton btnClearGraph = new JButton("Limpiar grafica");
     btnClearGraph.addActionListener(e -> this.graph.clear());
     resultsPanel.add(btnClearGraph);
@@ -213,6 +214,163 @@ public class CurvesAdjustmentView extends JPanel {
 
   private void countData() {
     this.dataCountField.setText(String.valueOf(this.dataTable.getRowCount()));
+  }
+  
+  private void typeComboPerformed() {
+    this.sXYField.setText("");
+      if (this.typeComboBox.getSelectedItem() == "Lineal" && this.gradoComboBox.getSelectedItem() == "1" || this.typeComboBox.getSelectedItem() == "Polinomial" && this.gradoComboBox.getSelectedItem() == "1") {
+        try {
+
+          // f = Integer.parseInt(numerodatos.getText());
+          this.f = Integer.parseInt(this.gradoComboBox.getSelectedItem().toString()) + 1;
+          this.c = this.f + 1;
+          // 
+          Object col[] = new Object[c];
+          for (int j = 0; j < c; j++) {
+            if (j < c - 1) {
+              col[j] = "i " + (j + 1);
+            } else {
+              col[j] = "R";
+            }
+          }
+
+          resultsModel = new DefaultTableModel(col, f);
+
+          resultsTable.setModel(resultsModel);
+
+        } catch (Exception e) {
+          JOptionPane.showMessageDialog(null, "ERROR EN EL INGRESO DE LOS DATOS", "MENSAJE", JOptionPane.PLAIN_MESSAGE);
+        }
+
+        gradoUno();
+
+      } else if (this.typeComboBox.getSelectedItem() == "Polinomial" && this.gradoComboBox.getSelectedItem() == "2") {
+        try {
+
+          // f = Integer.parseInt(numerodatos.getText());
+          this.f = Integer.parseInt(this.gradoComboBox.getSelectedItem().toString()) + 1;
+          this.c = this.f + 1;
+          // 
+          Object col[] = new Object[c];
+          for (int j = 0; j < c; j++) {
+            if (j < c - 1) {
+              col[j] = "i " + (j + 1);
+            } else {
+              col[j] = "R";
+            }
+          }
+
+          resultsModel = new DefaultTableModel(col, f);
+
+          resultsTable.setModel(resultsModel);
+
+        } catch (Exception e) {
+          JOptionPane.showMessageDialog(null, "ERROR EN EL INGRESO DE LOS DATOS", "MENSAJE", JOptionPane.PLAIN_MESSAGE);
+        }
+
+        gradoDos();
+      } // grado 3
+      else if (this.typeComboBox.getSelectedItem() == "Polinomial" && this.gradoComboBox.getSelectedItem() == "3") {
+        try {
+
+          // f = Integer.parseInt(numerodatos.getText());
+          this.f = Integer.parseInt(this.gradoComboBox.getSelectedItem().toString()) + 1;
+          this.c = this.f + 1;
+          // 
+          Object col[] = new Object[c];
+          for (int j = 0; j < c; j++) {
+            if (j < c - 1) {
+              col[j] = "i " + (j + 1);
+            } else {
+              col[j] = "R";
+            }
+          }
+
+          resultsModel = new DefaultTableModel(col, f);
+
+          resultsTable.setModel(resultsModel);
+
+        } catch (Exception e) {
+          JOptionPane.showMessageDialog(null, "ERROR EN EL INGRESO DE LOS DATOS", "MENSAJE", JOptionPane.PLAIN_MESSAGE);
+        }
+
+        gradoTres();
+      } else if (this.typeComboBox.getSelectedItem() == "Polinomial" && this.gradoComboBox.getSelectedItem() == "4") {
+        try {
+
+          // f = Integer.parseInt(numerodatos.getText());
+          this.f = Integer.parseInt(this.gradoComboBox.getSelectedItem().toString()) + 1;
+          this.c = this.f + 1;
+          // 
+          Object col[] = new Object[c];
+          for (int j = 0; j < c; j++) {
+            if (j < c - 1) {
+              col[j] = "i " + (j + 1);
+            } else {
+              col[j] = "R";
+            }
+          }
+
+          resultsModel = new DefaultTableModel(col, f);
+
+          resultsTable.setModel(resultsModel);
+
+        } catch (Exception e) {
+          JOptionPane.showMessageDialog(null, "ERROR EN EL INGRESO DE LOS DATOS", "MENSAJE", JOptionPane.PLAIN_MESSAGE);
+        }
+
+        gradoCuatro();
+      } else if (this.typeComboBox.getSelectedItem() == "Polinomial" && this.gradoComboBox.getSelectedItem() == "5") {
+        try {
+
+          // f = Integer.parseInt(numerodatos.getText());
+          this.f = Integer.parseInt(this.gradoComboBox.getSelectedItem().toString()) + 1;
+          this.c = this.f + 1;
+          // 
+          Object col[] = new Object[c];
+          for (int j = 0; j < c; j++) {
+            if (j < c - 1) {
+              col[j] = "i " + (j + 1);
+            } else {
+              col[j] = "R";
+            }
+          }
+
+          resultsModel = new DefaultTableModel(col, f);
+
+          resultsTable.setModel(resultsModel);
+
+        } catch (Exception e) {
+          JOptionPane.showMessageDialog(null, "ERROR EN EL INGRESO DE LOS DATOS", "MENSAJE", JOptionPane.PLAIN_MESSAGE);
+        }
+
+        gradoCinco();
+      } else if (this.typeComboBox.getSelectedItem() == "Polinomial" && this.gradoComboBox.getSelectedItem() == "6") {
+        try {
+
+          // f = Integer.parseInt(numerodatos.getText());
+          this.f = Integer.parseInt(this.gradoComboBox.getSelectedItem().toString()) + 1;
+          this.c = this.f + 1;
+          // 
+          Object col[] = new Object[c];
+          for (int j = 0; j < c; j++) {
+            if (j < c - 1) {
+              col[j] = "i " + (j + 1);
+            } else {
+              col[j] = "R";
+            }
+          }
+
+          resultsModel = new DefaultTableModel(col, f);
+
+          resultsTable.setModel(resultsModel);
+
+        } catch (Exception e) {
+          JOptionPane.showMessageDialog(null, "ERROR EN EL INGRESO DE LOS DATOS", "MENSAJE", JOptionPane.PLAIN_MESSAGE);
+        }
+
+        gradoSeis();
+      }
   }
 
   private void loadMatriz() {
@@ -939,13 +1097,12 @@ public class CurvesAdjustmentView extends JPanel {
   }
 
   public double[] loadMatriz(double m[][], double r[]) {
-    // recuerde que el metodo de Gauss Jordan trabaja con la idea de convertir la
-    // matriz aumentada en la matriz identidad
+    
+    // recuerde que el metodo de Gauss Jordan trabaja con la idea de convertir la matriz aumentada en la matriz identidad
     for (int i = 0; i <= r.length - 1; i++) {
       double d, c = 0;
       d = m[i][i];// seleccionamos el pivote
-      //this.resultsField.append(Double.toString(d / 2) + "*fila" + (i + 1) + "\n");// muesra en el area de texto el
-      // pivote seleccionado
+      // area_de_texto.append(Double.toString(d/2) + "*fila" + (i + 1) + "\n");// muesra en el area de texto el pivote seleccionado
       for (int s = 0; s <= r.length - 1; s++) {// pasamos a convertir en 1 al pivote seleionado
         m[i][s] = ((m[i][s]) / d);
       }
@@ -953,35 +1110,38 @@ public class CurvesAdjustmentView extends JPanel {
 
       // paso a mostrar las opraciones realizadas en la matriz aumentada
       for (int j = 0; j < r.length; j++) {
+
         for (int k = 0; k < r.length; k++) {
-          this.resultsField.append(Double.toString(m[j][k]) + "\t");
+          //  area_de_texto.append(Double.toString(m[j][k]) + "\t");
         }
-        this.resultsField.append("|\t" + Double.toString(r[j]) + "\n");
+        //area_de_texto.append("|\t" + Double.toString(r[j]) + "\n");
       }
-      this.resultsField.append("\n\n");// fin paso a motrar las opraciones realizadas en la matriz aumentada
+      //area_de_texto.append("\n\n");// fin paso a motrar las opraciones realizadas en la matriz aumentada
 
       for (int x = 0; x <= r.length - 1; x++) {
         if (i != x) {
           c = m[x][i];
-          //this.resultsField.append("-" + Double.toString(c) + " * fila" + (i + 1) + "+ fila" + (x + 1) + "\n");// mustra
-          for (int y = 0; y <= r.length - 1; y++) {// se hace cero a todos los elemntos de la colunma que no sean el
-            // pivote
+          //   area_de_texto.append("-" + Double.toString(c) + " * fila" + (i + 1) + "+ fila" + (x + 1) + "\n");// mustra en pantalla las opraciones que se realizaran por fila
+          for (int y = 0; y <= r.length - 1; y++) {// se hace cero a todos los elemntos de la colunma que no sean el pivote
             m[x][y] = m[x][y] - c * m[i][y];
+
           }
           r[x] = r[x] - c * r[i];
+
           // paso a mostrar las opraciones realizadas en la matriz aumentada
-         /* for (int j = 0; j < r.length; j++) {
+          for (int j = 0; j < r.length; j++) {
+
             for (int k = 0; k < r.length; k++) {
-              this.resultsField.append(Double.toString(m[j][k]) + "\t");
+              //   area_de_texto.append(Double.toString(m[j][k]) + "\t");
             }
-            this.resultsField.append("|\t" + Double.toString(r[j]) + "\n");
+            // area_de_texto.append("|\t" + Double.toString(r[j]) + "\n");
           }
-          this.resultsField.append("\n\n");// fin paso a motrar las opraciones realizadas en la matriz aumentada
+          // area_de_texto.append("\n\n");// fin paso a motrar las opraciones realizadas en la matriz aumentada
 
-        */} // fin if (i != x)
-      } // fin for (int x = 0; x <= r.length - 1; x++)
+        }// fin if (i != x)
+      }// fin for (int x = 0; x <= r.length - 1; x++)
 
-    } // fin bucle i
+    }//fin bucle i
     return r;// retorna la solucion l sistema
 
   }

@@ -12,6 +12,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import methods.equationsRoots.Bisection;
+import util.Funcion;
+import util.Graph;
 import util.Messages;
 import util.Operations;
 import util.Validations;
@@ -19,129 +21,158 @@ import views.Principal;
 
 public class BisectionView extends JPanel {
 
-  private JTextField xiField;
-  private JTextField xuField;
-  private JTextField functionField;
-  private JFormattedTextField snField;
-  private JTextField resultField;
-  private JButton solveButton;
-  private JPanel panel;
-  private JPanel actionsPanel;
-  private JComboBox comboBox;
-  private JButton button;
+	private JTextField xiField;
+	private JTextField xuField;
+	private JTextField functionField;
+	private JFormattedTextField snField;
+	private JTextField resultField;
+	private JButton solveButton;
+	private JPanel panel;
+	private JPanel actionsPanel;
+	private JComboBox comboBox;
+	private JButton button;
 
-  private Principal principal;
+	private Principal principal;
+	private JPanel mainPanel;
+	private JPanel graphPanel;
+	
+	private Graph graph;
 
-  /**
-   * Create the panel.
-   */
-  public BisectionView(Principal principal) {
-    this.principal = principal;
-    configureWindow();
-    setLayout(new BorderLayout(0, 0));
+	/**
+	 * Create the panel.
+	 * 
+	 * @param principal
+	 */
+	public BisectionView(Principal principal) {
+		this.principal = principal;
+		configureWindow();
+		setLayout(new GridLayout(1, 2, 10, 10));
+		
+		this.graph = new Graph("Gráfica", null, null);
 
-    actionsPanel = new JPanel();
-    add(actionsPanel, BorderLayout.NORTH);
-    actionsPanel.setLayout(new GridLayout(0, 2, 0, 0));
+		mainPanel = new JPanel();
+		add(mainPanel);
+		mainPanel.setLayout(new BorderLayout(0, 0));
 
-    comboBox = new JComboBox();
-    comboBox.setModel(new DefaultComboBoxModel(
-            new String[]{"Biseccion", "Falsa Posicion", "Newton Raphson", "Secante", "Secante Modificado"}));
-    comboBox.addItemListener(e -> principal.goToPanel(comboBox.getSelectedItem().toString()));
-    actionsPanel.add(comboBox);
+		actionsPanel = new JPanel();
+		mainPanel.add(actionsPanel, BorderLayout.NORTH);
+		actionsPanel.setLayout(new GridLayout(0, 2, 10, 10));
 
-    button = new JButton("VOLVER AL INICIO");
-    button.addActionListener(e -> this.principal.goToPanel("Principal"));
-    actionsPanel.add(button);
+		comboBox = new JComboBox();
+		comboBox.setModel(
+				new DefaultComboBoxModel(new String[] { "Falsa Posicion", "Newton Raphson", "Secante", "Secante Modificado" }));
+		comboBox.addActionListener(e -> principal.goToPanel(comboBox.getSelectedItem().toString()));
+		actionsPanel.add(comboBox);
 
-    panel = new JPanel();
-    add(panel);
-    panel.setLayout(new GridLayout(2, 0, 20, 20));
+		button = new JButton("VOLVER AL INICIO");
+		button.addActionListener(e -> this.principal.goToPanel("Principal"));
+		actionsPanel.add(button);
 
-    JPanel panelData = new JPanel();
-    panel.add(panelData);
-    panelData.setLayout(new GridLayout(0, 1, 10, 10));
+		panel = new JPanel();
+		mainPanel.add(panel, BorderLayout.CENTER);
+		panel.setLayout(new GridLayout(2, 0, 20, 20));
 
-    JPanel panelXs = new JPanel();
-    panelData.add(panelXs);
-    panelXs.setLayout(new GridLayout(0, 3, 0, 0));
+		JPanel panelData = new JPanel();
+		panel.add(panelData);
+		panelData.setLayout(new GridLayout(0, 1, 10, 10));
 
-    xiField = new JTextField();
-    xiField.setBorder(new TitledBorder(null, "Xi", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-    panelXs.add(xiField);
-    xiField.setColumns(10);
+		JPanel panelXs = new JPanel();
+		panelData.add(panelXs);
+		panelXs.setLayout(new GridLayout(0, 3, 0, 0));
 
-    xuField = new JTextField();
-    xuField.setBorder(new TitledBorder(null, "Xu", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-    panelXs.add(xuField);
-    xuField.setColumns(10);
+		xiField = new JTextField();
+		xiField.setBorder(new TitledBorder(null, "Xi", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelXs.add(xiField);
+		xiField.setColumns(10);
 
-    snField = new JFormattedTextField(new Integer(5));
-    snField.setBorder(new TitledBorder(null, "Cifras", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-    panelXs.add(snField);
-    snField.setColumns(10);
+		xuField = new JTextField();
+		xuField.setBorder(new TitledBorder(null, "Xu", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelXs.add(xuField);
+		xuField.setColumns(10);
 
-    functionField = new JTextField();
-    functionField.setBorder(new TitledBorder(null, "Fx", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-    panelData.add(functionField);
-    functionField.setColumns(10);
+		snField = new JFormattedTextField(new Integer(5));
+		snField.setBorder(new TitledBorder(null, "Cifras", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelXs.add(snField);
+		snField.setColumns(10);
 
-    JPanel panelResult = new JPanel();
-    panel.add(panelResult);
-    panelResult.setLayout(new BorderLayout(0, 0));
+		functionField = new JTextField();
+		functionField.setBorder(new TitledBorder(null, "Fx", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelData.add(functionField);
+		functionField.setColumns(10);
 
-    solveButton = new JButton("Resolver");
-    solveButton.addActionListener(e -> solve());
-    panelResult.add(solveButton, BorderLayout.NORTH);
+		JPanel panelResult = new JPanel();
+		panel.add(panelResult);
+		panelResult.setLayout(new BorderLayout(0, 0));
 
-    resultField = new JTextField();
-    resultField.setHorizontalAlignment(SwingConstants.CENTER);
-    resultField.setEditable(false);
-    resultField.setBorder(new TitledBorder(null, "Resultado", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-    resultField.setFont(new Font("Roboto Mono", Font.PLAIN, 20));
+		solveButton = new JButton("Resolver");
+		solveButton.addActionListener(e -> solve());
+		panelResult.add(solveButton, BorderLayout.NORTH);
 
-    panelResult.add(resultField);
-    resultField.setColumns(10);
+		resultField = new JTextField();
+		resultField.setHorizontalAlignment(SwingConstants.CENTER);
+		resultField.setEditable(false);
+		resultField.setBorder(new TitledBorder(null, "Resultado", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		resultField.setFont(new Font("Roboto Mono", Font.PLAIN, 20));
 
-  }
+		panelResult.add(resultField);
+		resultField.setColumns(10);
 
-  private void solve() {
-    String xi = this.xiField.getText();
-    String xu = this.xuField.getText();
-    String n = this.snField.getText();
-    String function = this.functionField.getText();
+		graphPanel = graph.viewGraph();
+		add(graphPanel);
+		graphPanel.setLayout(new BorderLayout(0, 0));
 
-    if (Validations.isEmpty(xi) || Validations.isEmpty(xu) || Validations.isEmpty(function)) {
-      Messages.errorMessage("Debes llenar todos los campos");
-      return;
-    }
+	}
 
-    if (!Validations.isNumeric(xi) || !Validations.isNumeric(xu) || !Validations.isNumeric(n)) {
-      Messages.errorMessage("Los intervalos deben ser numéricos");
-      return;
-    }
+	private void solve() {
+		String xi = this.xiField.getText();
+		String xu = this.xuField.getText();
+		String n = this.snField.getText();
+		String function = this.functionField.getText();
 
-    if (xi.equals(xu)) {
-      Messages.errorMessage("Los intervalos no pueden ser iguales");
-      return;
-    }
+		if (Validations.isEmpty(xi) || Validations.isEmpty(xu) || Validations.isEmpty(function)) {
+			Messages.errorMessage("Debes llenar todos los campos");
+			return;
+		}
 
-    Double xiD = Double.parseDouble(xi);
-    Double xuD = Double.parseDouble(xu);
-    Integer nI = Integer.parseInt(n);
+		if (!Validations.isNumeric(xi) || !Validations.isNumeric(xu) || !Validations.isNumeric(n)) {
+			Messages.errorMessage("Los intervalos deben ser numéricos");
+			return;
+		}
 
-    try {
-      Bisection b = new Bisection(function, xiD, xuD, nI);
-      Double result = Operations.roundD(b.result(), nI);
-      this.resultField.setText(String.valueOf(result));
-    } catch (Exception ex) {
-      this.resultField.setText("Math ERROR");
-    }
-  }
+		if (xi.equals(xu)) {
+			Messages.errorMessage("Los intervalos no pueden ser iguales");
+			return;
+		}
 
-  private void configureWindow() {
-    this.principal.getFrame().setTitle("Biseccion");
-    this.principal.getFrame().setSize(600, 400);
-    this.principal.getFrame().setLocationRelativeTo(null);
-  }
+		Double xiD = Double.parseDouble(xi);
+		Double xuD = Double.parseDouble(xu);
+		Integer nI = Integer.parseInt(n);
+
+		try {
+			Bisection b = new Bisection(function, xiD, xuD, nI);
+			Double result = Operations.roundD(b.result(), nI);
+			this.resultField.setText(String.valueOf(result));
+		} catch (Exception ex) {
+			this.resultField.setText("Math ERROR");
+		}
+		
+		graph.clear();
+		try {
+			double inter1 = Double.parseDouble(this.resultField.getText()) - 5;
+			double inter2 = Double.parseDouble(this.resultField.getText()) + 5;
+			Funcion f = new Funcion(function);
+			double[] x = f.rango(inter1, inter2, 0.2);
+			double[] y = f.eval(x);
+			graph.createGraph(function, x, y);
+
+		} catch (Exception ex) {
+			this.resultField.setText("Math ERROR");
+		}
+	}
+
+	private void configureWindow() {
+		this.principal.getFrame().setTitle("Biseccion");
+		this.principal.getFrame().setSize(900, 500);
+		this.principal.getFrame().setLocationRelativeTo(null);
+	}
 }
